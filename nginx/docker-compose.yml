@@ -1,0 +1,35 @@
+version: '3.4'
+networks:
+  cct-backstage:
+#    driver: bridge
+#    ipam:
+#      driver: default
+#      config:
+#        - subnet: 172.30.0.0/24
+    external: true
+
+services:
+  nginx:
+    container_name: cct-nginx
+    image: cct-nginx:v1.2
+    volumes:
+      - type: bind
+        source: /var/log/nginx/
+        target: /var/log/nginx/
+      - type: bind
+        source: /usr/local/nginx/vhosts/
+        target: /etc/nginx/vhosts/
+      - type: bind
+        source: /usr/local/nginx/nginx.conf
+        target: /etc/nginx/nginx.conf
+      - type: bind
+        source: /usr/local/cct_project/chaceaiadmin/chacefront/dist/
+        target: /etc/nginx/statics/
+    ports:
+      - "80:80"
+    extra_hosts:
+      - "buildbot-master:192.168.1.121"
+    networks:
+      cct-backstage:
+        ipv4_address: 172.30.0.2
+

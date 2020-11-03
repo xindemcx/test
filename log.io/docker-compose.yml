@@ -1,0 +1,52 @@
+version: "3.4"
+services:
+  logio_server:
+    image: svr.log.io:v1.6 
+    container_name: logio-server
+    ports:
+      - "6688-6689:6688-6689"
+    working_dir: /usr/local/log.io/server/
+    networks:
+      cct-backstage:
+        aliases:
+          - logio-server
+        ipv4_address: 172.30.0.10
+    hostname: logio-server
+    volumes:
+      - "/usr/local/log.io/server/svr.log.io.server.conf:/etc/supervisor.conf.d/include/svr.log.io.server.conf"
+      - "/usr/local/log.io/server/:/usr/local/log.io/server/"
+  
+  logio_input_cct:
+    image: svr.log.io:v1.6 
+    container_name: logio-input-cct
+    working_dir: /usr/local/log.io/input/
+    networks:
+      cct-backstage:
+        aliases:
+          - logio-input-cct
+        ipv4_address: 172.30.0.11
+    depends_on:
+      - logio_server
+    hostname: logio-input-cct
+    volumes:
+      - type: bind
+        source: /usr/local/log.io/input/cct/svrinclude/
+        target: /etc/supervisor.conf.d/include/
+      - type: bind
+        source: /usr/local/log.io/input/cct/config/
+        target: /usr/local/log.io/input/
+      - type: bind
+        source: /usr/local/buildbot/master/twistd.log
+        target: /usr/local/log.io/target/buildbot/twistd.log
+#        propagation: rw
+      - type: bind
+        source: /usr/local/tycspider/tianyanchaSpider/logs/tianyancha_log.log
+        target: /usr/local/log.io/target/tianyancha_log.log
+      - type: bind
+        source: /var/log/tycspider/tianyanchaSpider.err.log
+        target: /usr/local/log.io/target/tianyanchaSpider.err.log
+
+networks:
+  cct-backstage:
+    external: true
+
