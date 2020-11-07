@@ -1,0 +1,29 @@
+version: "3"
+services:
+  djnago:
+    image: django:1.10.4-python3
+    container_name: cctdjango
+#    ports:
+#      - "8080:8080"
+    expose:
+      - "8080"
+    volumes:
+      - v_cctdjango
+    workdir: /usr/src/app
+    networks:
+      cct-backstage:
+        ipv4_address: 172.30.0.4
+
+  v_cctdjango:
+    image: alpine:latest
+    container_name: vol_cctdjango
+    volumes:
+      - "/var/log/cct_project/backstage/django/:/var/log/"
+      - "/data/cct_project/backstage/django/:/data"
+      - "/usr/local/cct_project/backstage/django/:/usr/src/app"
+
+
+networks:
+  cct-backstage:
+    external: true
+  
