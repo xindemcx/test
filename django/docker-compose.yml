@@ -7,9 +7,34 @@ services:
 #      - "8080:8080"
     expose:
       - "8080"
+    volu container_name: cctdjango
+#    ports:
+#      - "8080:8080"
+    expose:
+      - "8080"
     volumes:
-      - v_cctdjango
+      - v_cctainer_name: vol_cctdjango
+    volumes:
+      - "/var/log/cct_project/backstage/django/:/var/log/": /usr/src/app
+    networks:
+      cct-backstage:
+        ipv4_address: 172.30.0.4
+
+  v_cctdjango:
+    image: alpine:latest
+    container_name: vol_cctdjango
+    volumes:
+      - "/var/logdjango
     workdir: /usr/src/app
+    networks:
+      cct-backstage:
+        ipv4_address: 172.30.0.4
+
+  v_cctdjango:
+    image: alpine:latest
+    container_name: vol_cctdjango
+    volumes:
+      - "/var/log/cct_project/backstage/django/:/var/log/": /usr/src/app
     networks:
       cct-backstage:
         ipv4_address: 172.30.0.4
