@@ -8,7 +8,6 @@ USER root
 #   sysctl.conf
 #   supervisor.conf 
 COPY ins/ /tmp
-
 RUN set -xe \
     && sed -i 's#http://deb.debian.org/#http://ftp.sjtu.edu.cn/#' /etc/apt/sources.list     \
     && sed -i 's|security.debian.org/debian-security|mirrors.ustc.edu.cn/debian-security|g' /etc/apt/sources.list  \
