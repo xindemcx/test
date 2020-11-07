@@ -1,0 +1,6 @@
+*.py
+*.rar
+*.tar*
+*.tgz
+__pycache__/
+.idea/
