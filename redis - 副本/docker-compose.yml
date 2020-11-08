@@ -1,0 +1,36 @@
+version: "3.4"
+services:
+  redis:
+    image: svr.redis:v1.7
+    container_name: cct-redis
+    user: redis #999:1000
+    ports:
+      - "6379:6379"
+#    expose:
+#      - "8080"
+    volumes:
+      - type: bind
+        source: /var/log/cct_project/backstage/redis/
+        target: /var/log/redis/
+      - type: bind
+        source: /data/cct_project/backstage/redis/
+        target: /data/
+      - type: bind
+        source: /usr/local/cct_project/backstage/redis/etc/redis/
+        target: /etc/redis/
+      - type: bind
+        source: /usr/local/cct_project/backstage/redis/etc/supervisor/
+        target: /etc/supervisor.conf.d/include/
+#    depends_on:
+#      - v_cctredis
+    networks:
+      cct-backstage:
+        ipv4_address: 172.30.0.3
+    hostname: cct-redis
+#    command: ["/data/redis.conf"]
+
+
+networks:
+  cct-backstage:
+    external: true
+  
