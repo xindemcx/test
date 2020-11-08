@@ -1,0 +1,29 @@
+version: '3.4'
+networks:
+  cct-backstage:
+#    driver: bridge
+#    ipam:
+#      driver: default
+#      config:
+#        - subnet: 172.30.0.0/24
+    external: true
+    asdfasdf
+    sdfadist/saddist/
+    adsfdist/asdfasdf
+    
+    
+    fasdist/
+    
+    
+    
+    
+    asaadist/fasdist/dist/
+        target: /etc/nginx/statics/
+    ports:
+      - "80:80"
+    extra_hosts:
+      - "buildbot-master:192.168.1.121"
+    networks:
+      cct-backstage:
+        ipv4_address: 172.30.0.2
+
